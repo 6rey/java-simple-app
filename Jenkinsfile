@@ -15,12 +15,14 @@ pipeline {
         }
         stage('Terraform Init') {
             steps {
+                dir('tf')
                 sh 'terraform init'
             }
             
         }
         stage('Terraform Plan') {
             steps {
+                dir('tf')
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                 {
                 sh 'terraform plan'
@@ -29,6 +31,7 @@ pipeline {
         }
         stage('Terraform Apply') {
             steps {
+                dir('tf')
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                 {
                 sh 'terraform apply --auto-approve'
