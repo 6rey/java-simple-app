@@ -3,8 +3,15 @@ pipeline {
     tools {
         terraform 'terraform'
     }
-
+    
     stages {
+        stage('Delete workspace before build starts') {
+            steps {
+                echo 'Deleting workspace'
+                deleteDir()
+            }
+        }
+        
         stage('Git Checkout terraform') {
             agent { 
                 label 'master' 
