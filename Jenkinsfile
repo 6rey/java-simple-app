@@ -5,14 +5,14 @@ pipeline {
     }
     
     stages {
-        stage('Git Checkout terraform') {
-            agent { 
-                label 'master' 
-            }
-            steps {
-                git branch: 'main', credentialsId: 'jenkins-token', url: 'https://github.com/6rey/tf.git'
-            }
-        }
+       // stage('Git Checkout terraform') {
+          //  agent { 
+           //     label 'master' 
+           // }
+          // steps {
+          //      git branch: 'main', credentialsId: 'jenkins-token', url: 'https://github.com/6rey/tf.git'
+          //  }
+        //}
         stage('Terraform Init') {
             steps {
                 dir('tf')
