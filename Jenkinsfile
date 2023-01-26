@@ -14,6 +14,9 @@ pipeline {
           //  }
         //}
         stage('Terraform Init') {
+            agent { 
+                label 'master'
+            }
             steps {
                 dir('tf'){
                  sh 'terraform init'
@@ -22,6 +25,9 @@ pipeline {
             
         }
         stage('Terraform Plan') {
+            agent { 
+                label 'master'
+            }
             steps {
                 dir('tf'){
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
@@ -32,6 +38,9 @@ pipeline {
             }
         }
         stage('Terraform Apply') {
+            agent { 
+                label 'master'
+            }
             steps {
                 dir('tf'){
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
