@@ -22,6 +22,7 @@ pipeline {
         stage('Terraform Init') {
             agent { 
                 label 'master'
+                customWorkspace '/var/lib/jenkins/workspace/pipeline-scm@2'
             }
             steps {
                 dir('tf'){
