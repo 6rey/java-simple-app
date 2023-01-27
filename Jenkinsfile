@@ -13,6 +13,12 @@ pipeline {
           //      git branch: 'main', credentialsId: 'jenkins-token', url: 'https://github.com/6rey/tf.git'
           //  }
         //}
+        stage('Delete workspace before build starts') {
+            steps {
+                echo 'Deleting workspace'
+                deleteDir()
+            }
+        }        
         stage('Terraform Init') {
             agent { 
                 label 'master'
