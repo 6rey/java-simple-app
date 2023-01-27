@@ -66,5 +66,21 @@ pipeline {
                 git branch: 'master', credentialsId: 'jenkins-token', url: 'https://github.com/6rey/java-simple-app.git'
             }
         }
+        stage('Build docker image') {
+            agent { 
+                label 'agent-jar'
+            }
+            steps{
+                sh 'docker build  --no-cache --tag java:version .' 
+            }
+        }
+        stage('Run Docker App') {
+            agent { 
+                label 'agent-jar' 
+            }
+            steps{
+               sh 'docker run -p 80:8080 -t java:version'
+            }
+        }
     }    
 }
