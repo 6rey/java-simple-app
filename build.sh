@@ -1,1 +1,1 @@
-docker build  --no-cache --tag java_app:ver01 .
+docker build  --no-cache --tag 6rey/java_app:ver01 .
