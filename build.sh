@@ -1,1 +1,1 @@
-docker build  --no-cache --tag java:version .
+docker build  --no-cache --tag java_app:ver01 .
