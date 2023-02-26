@@ -19,7 +19,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('test-aws'){
+                dir('tf/test-aws'){
                 sh 'terraform init'
                 }
             }
@@ -30,7 +30,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('test-aws'){
+                dir('tf/test-aws'){
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                     {
                     sh 'terraform plan'
@@ -43,7 +43,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('test-aws'){
+                dir('tf/test-aws'){
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                     {
                     sh 'terraform apply --auto-approve'
@@ -136,7 +136,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('test-aws'){
+                dir('tf/test-aws'){
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                         {
                             sh 'terraform destroy --auto-approve'
@@ -149,7 +149,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('prod-aws'){
+                dir('tf/prod-aws'){
                   sh 'terraform init'
                 }  
             }
@@ -160,7 +160,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('prod-aws'){
+                dir('tf/prod-aws'){
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                     {
                         sh 'terraform plan'
@@ -173,7 +173,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('prod-aws'){
+                dir('tf/prod-aws'){
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                     {
                         sh 'terraform apply --auto-approve'
