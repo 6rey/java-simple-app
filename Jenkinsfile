@@ -11,7 +11,7 @@ pipeline {
             }
             steps {
                     
-                    git branch: 'main', credentialsId: 'jenkins-token', url: 'https://github.com/6rey/tf.git'
+                    git branch: 'main', credentialsId: 'jenkins-token', url: 'https://github.com/6rey/java-simple-app'
             }
         }
         stage('Terraform Init Env, Build and Test instance') {
@@ -19,7 +19,9 @@ pipeline {
                 label 'master' 
             }
             steps {
+                dir('test-aws'){
                 sh 'terraform init'
+                }
             }
             
         }
@@ -28,9 +30,11 @@ pipeline {
                 label 'master' 
             }
             steps {
+                dir('test-aws'){
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
-                {
-                sh 'terraform plan'
+                    {
+                    sh 'terraform plan'
+                    }
                 }
             }
         }
@@ -39,9 +43,11 @@ pipeline {
                 label 'master' 
             }
             steps {
+                dir('test-aws'){
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
-                {
-                sh 'terraform apply --auto-approve'
+                    {
+                    sh 'terraform apply --auto-approve'
+                    }
                 }
             }
         }
@@ -130,10 +136,12 @@ pipeline {
                 label 'master' 
             }
             steps {
+                dir('test-aws'){
                 withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
-                    {
-                        sh 'terraform destroy --auto-approve'
-                    }
+                        {
+                            sh 'terraform destroy --auto-approve'
+                        }
+                }
             }
         }
         stage('Terraform Init Production instance') {
@@ -141,7 +149,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('prod'){
+                dir('prod-aws'){
                   sh 'terraform init'
                 }  
             }
@@ -152,7 +160,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('prod'){
+                dir('prod-aws'){
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                     {
                         sh 'terraform plan'
@@ -165,7 +173,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('prod'){
+                dir('prod-aws'){
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                     {
                         sh 'terraform apply --auto-approve'
