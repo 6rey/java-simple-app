@@ -201,8 +201,8 @@ pipeline {
             }
             
             steps {    
-                echo 'Waiting 60 seconds befor_destory instance'
-                sh 'sleep 60'
+                echo 'Waiting 360 seconds befor_destory instance'
+                sh 'sleep 360'
             }
         }
         stage('Terraform Destroy') {
@@ -210,7 +210,7 @@ pipeline {
                 label 'master' 
             }
             steps {
-                dir('prod'){
+                dir('tf/prod-aws'){
                     withCredentials([[$class: 'AmazonWebServicesCredentialsBinding', accessKeyVariable: 'AWS_ACCESS_KEY_ID', credentialsId: 'aws-ec2', secretKeyVariable: 'AWS_SECRET_ACCESS_KEY']]) 
                     {
                         sh 'terraform destroy --auto-approve'
