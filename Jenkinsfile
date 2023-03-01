@@ -201,8 +201,8 @@ pipeline {
             }
             
             steps {    
-                echo 'Waiting 360 seconds befor_destory instance'
-                sh 'sleep 360'
+                echo 'Waiting 600 seconds befor_destory instance'
+                sh 'sleep 600'
             }
         }
         stage('Terraform Destroy') {
